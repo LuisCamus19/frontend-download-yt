@@ -1,0 +1,186 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 20px;
+}
+
+.converter-card {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--card-bg); /* Tu gris oscuro #303030 */
+    border-radius: 16px;
+    padding: 20px;
+    color: var(--text-main); /* Blanco */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- TEXTOS --- */
+mat-card-title {
+    color: var(--lime-punch); /* Título en Verde Limón */
+    font-weight: 700;
+    margin-bottom: 8px !important;
+}
+
+mat-card-subtitle {
+    color: var(--text-muted) !important; /* Gris claro */
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+/* --- ESTRUCTURA VERTICAL (ESPACIADO) --- */
+.opciones-verticales {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.bloque-opcion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label-custom {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--lime-punch);
+    margin-left: 4px;
+}
+
+/* --- INPUTS Y FORM FIELDS --- */
+.full-width {
+    width: 100%;
+}
+
+/* Iconos del input */
+::ng-deep .mat-mdc-form-field-icon-suffix {
+    color: var(--lime-punch) !important;
+}
+
+/* Texto del input */
+::ng-deep .mdc-text-field__input {
+    color: var(--text-main) !important;
+    caret-color: var(--lime-punch) !important;
+}
+
+/* Labels flotantes */
+::ng-deep .mdc-floating-label {
+    color: var(--text-muted) !important;
+}
+
+::ng-deep .mdc-text-field--focused .mdc-floating-label {
+    color: var(--lime-punch) !important;
+}
+
+/* --- TOGGLE BUTTONS (AUDIO / VIDEO) --- */
+.toggle-group-full {
+    width: 100%;
+    display: flex;
+    border: 1px solid var(--lime-punch);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 52px;
+}
+
+mat-button-toggle {
+    flex: 1; 
+    width: 50%;
+    background-color: transparent;
+    color: var(--text-main);
+    border-left: 1px solid rgba(118, 255, 3, 0.3);
+    transition: all 0.3s ease;
+}
+
+mat-button-toggle-checked {
+    background-color: var(--lime-punch) !important;
+    color: #000000 !important; /* Texto negro para contraste */
+    font-weight: 800;
+}
+
+mat-button-toggle mat-icon {
+    margin-right: 8px;
+}
+
+/* --- SELECTOR DE CALIDAD --- */
+::ng-deep .mat-mdc-select-value,
+::ng-deep .mat-mdc-select-value-text {
+    color: var(--text-main) !important; /* Blanco */
+}
+
+::ng-deep .mat-mdc-select-arrow {
+    color: var(--lime-punch) !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+    background-color: var(--card-bg) !important;
+}
+
+::ng-deep .mat-mdc-option {
+    color: var(--text-main) !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+    color: var(--text-main) !important; 
+}
+
+::ng-deep .mat-mdc-option:hover, 
+::ng-deep .mat-mdc-option.mdc-list-item--selected {
+    background-color: rgba(118, 255, 3, 0.15) !important;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text {
+    color: var(--lime-punch) !important;
+    font-weight: bold;
+}
+
+/* --- LOADING SPINNER (FALTABA ESTO) --- */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px dashed var(--text-muted);
+}
+
+.loading-text {
+    margin-top: 15px;
+    color: var(--lime-punch);
+    font-weight: 500;
+}
+
+.subtext {
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+::ng-deep .mat-mdc-progress-spinner circle, 
+::ng-deep .mat-spinner circle {
+    stroke: var(--lime-punch) !important;
+}
+
+/* --- BOTÓN DE DESCARGA PRINCIPAL (FALTABA ESTO) --- */
+button[mat-raised-button] {
+    background-color: var(--lime-punch) !important;
+    color: #000000 !important; /* Texto negro */
+    font-weight: bold;
+    padding: 8px 24px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(118, 255, 3, 0.3); /* Resplandor verde */
+}
+
+button[mat-raised-button]:disabled {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: none;
+}

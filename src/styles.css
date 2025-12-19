@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+:root {
+  /* EL VERDE LIMÓN REAL (Vibrante y Fresco) */
+  --lime-punch: #76FF03; 
+  /* Un tono un poco más claro para cuando pasas el mouse */
+  --lime-hover: #64DD17; 
+
+  /* Fondo "Dark Grey" Neutro (Cálido y limpio, no negro puro) */
+  --bg-color: #212121;      
+  --card-bg: #303030;       
+  
+  /* Textos */
+  --text-main: #FFFFFF;
+  --text-muted: #BDBDBD;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-main);
+}
