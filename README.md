@@ -3,8 +3,8 @@
 Interfaz web que permite al usuario ingresar enlaces de YouTube y seleccionar el formato de descarga.
 
 ## 🛠️ Tecnologías
-* **Framework:** [Angular / React]
-* **Estilos:** [CSS / Bootstrap / Tailwind]
+* **Framework:** [Angular]
+* **Estilos:** [CSS]
 * **Conexión:** Consume la API del Backend.
 
 ## ⚙️ Configuración y Ejecución
