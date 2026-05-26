@@ -35,12 +35,21 @@ export class Converter {
 
   // --- SIGNALS ---
   urlVideo = signal('');
-  formatoSeleccionado = signal<'mp3' | 'mp4'>('mp3'); // Nuevo Signal para el formato
+  formatoSeleccionado = signal<'mp3' | 'mp4'>('mp3');
   calidadSeleccionada = signal('128');
   isLoading = signal(false);
 
+  // --- VALIDACIÓN DE COBERTURA TOTAL ---
+  isUrlValida = computed(() => {
+    const url = this.urlVideo().trim();
+    if (!url) return false;
+
+    const regExp =
+      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)?(youtube\.com|youtu\.be)\/(watch\?v=|shorts\/|live\/|embed\/|v\/|.+\?v=)?([^&=%\?{}$]+)/;
+    return regExp.test(url);
+  });
+
   // --- OPCIONES DINÁMICAS ---
-  // Cuando cambia el formato, cambiamos las opciones disponibles automáticamente
   opcionesCalidad = computed(() => {
     if (this.formatoSeleccionado() === 'mp3') {
       return [
@@ -57,23 +66,20 @@ export class Converter {
     }
   });
 
-  // Método para actualizar la calidad por defecto al cambiar formato
   cambiarFormato(nuevoFormato: 'mp3' | 'mp4') {
     this.formatoSeleccionado.set(nuevoFormato);
-    // Resetear a un valor lógico según el formato
     this.calidadSeleccionada.set(nuevoFormato === 'mp3' ? '128' : '720');
   }
 
   convertir() {
-    if (!this.urlVideo()) return;
+    if (!this.isUrlValida()) return;
     this.isLoading.set(true);
 
     const payload = {
-      url: this.urlVideo(),
+      url: this.urlVideo().trim(),
       quality: this.calidadSeleccionada(),
     };
 
-    // Decidir qué método llamar
     const request$ =
       this.formatoSeleccionado() === 'mp3'
         ? this.downloadService.downloadMp3(payload)
@@ -81,7 +87,6 @@ export class Converter {
 
     request$.subscribe({
       next: (response: HttpResponse<Blob>) => {
-        // ... (Misma lógica de extracción de nombre que ya tenías) ...
         const encodedFilename = response.headers.get('X-Filename');
         let filename = `archivo_${new Date().getTime()}.${this.formatoSeleccionado()}`;
 

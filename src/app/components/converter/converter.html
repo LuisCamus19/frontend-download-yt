@@ -2,7 +2,7 @@
   <mat-card class="converter-card">
     <mat-card-header>
       <mat-card-title>YouTube Converter</mat-card-title>
-      <mat-card-subtitle>Descarga música y video en alta calidad</mat-card-subtitle>
+      <mat-card-subtitle>Descarga archivos de audio y video de forma directa</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -12,22 +12,23 @@
           matInput
           [ngModel]="urlVideo()"
           (ngModelChange)="urlVideo.set($event)"
-          placeholder="https://youtu.be/..."
+          placeholder="https://www.youtube.com/watch?v=..."
           [disabled]="isLoading()"
-          pattern="^(https?://)?(www\.|m\.)?(youtube\.com|youtu\\.be)/.+$"
           required
           #videoInput="ngModel"
         />
         <mat-icon matSuffix>link</mat-icon>
 
-        @if (videoInput.invalid && (videoInput.dirty || videoInput.touched)) {
-        <mat-error>Debes ingresar un enlace válido de YouTube</mat-error>
+        @if (
+          !isUrlValida() && (videoInput.dirty || videoInput.touched) && urlVideo().trim() !== ''
+        ) {
+          <mat-error>Formato de enlace no reconocido</mat-error>
         }
       </mat-form-field>
 
       <div class="opciones-verticales">
         <div class="bloque-opcion">
-          <label class="label-custom">Formato:</label>
+          <label class="label-custom">Formato</label>
           <mat-button-toggle-group
             [value]="formatoSeleccionado()"
             (change)="cambiarFormato($event.value)"
@@ -36,25 +37,26 @@
             class="toggle-group-full"
           >
             <mat-button-toggle value="mp3">
-              <mat-icon>music_note</mat-icon> Audio MP3
+              <mat-icon>music_note</mat-icon>Audio MP3
             </mat-button-toggle>
 
             <mat-button-toggle value="mp4">
-              <mat-icon>videocam</mat-icon> Video MP4
+              <mat-icon>videocam</mat-icon>Video MP4
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
 
         <div class="bloque-opcion">
+          <label class="label-custom">Calidad</label>
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Calidad deseada</mat-label>
+            <mat-label>Seleccionar opción</mat-label>
             <mat-select
               [ngModel]="calidadSeleccionada()"
               (ngModelChange)="calidadSeleccionada.set($event)"
               [disabled]="isLoading()"
             >
               @for (opcion of opcionesCalidad(); track opcion.value) {
-              <mat-option [value]="opcion.value">{{ opcion.label }}</mat-option>
+                <mat-option [value]="opcion.value">{{ opcion.label }}</mat-option>
               }
             </mat-select>
             <mat-icon matSuffix>tune</mat-icon>
@@ -63,13 +65,12 @@
       </div>
 
       @if (isLoading()) {
-      <div class="loading-container">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p class="loading-text">
-          Procesando {{ formatoSeleccionado() | uppercase }}...<br />
-          <span class="subtext">Esto puede tomar unos segundos</span>
-        </p>
-      </div>
+        <div class="loading-container">
+          <mat-spinner diameter="24"></mat-spinner>
+          <p class="loading-text">
+            Procesando archivo... <span class="subtext">Espere un momento por favor.</span>
+          </p>
+        </div>
       }
     </mat-card-content>
 
@@ -78,9 +79,9 @@
         mat-raised-button
         color="primary"
         (click)="convertir()"
-        [disabled]="isLoading() || videoInput.invalid"
+        [disabled]="isLoading() || !isUrlValida()"
       >
-        <mat-icon>download</mat-icon> Descargar Archivo
+        Descargar archivo
       </button>
     </mat-card-actions>
   </mat-card>

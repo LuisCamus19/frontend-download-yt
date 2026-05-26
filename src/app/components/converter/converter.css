@@ -1,186 +1,186 @@
-/* --- CONTENEDOR PRINCIPAL --- */
+/* --- CONTENEDOR PRINCIPAL MINIMALISTA --- */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-    padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
+/* --- TARJETA ELEGANTE Y SIMPLE --- */
 .converter-card {
-    width: 100%;
-    max-width: 480px;
-    background-color: var(--card-bg); /* Tu gris oscuro #303030 */
-    border-radius: 16px;
-    padding: 20px;
-    color: var(--text-main); /* Blanco */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
-/* --- TEXTOS --- */
+/* --- CABECERA --- */
+mat-card-header {
+  margin-bottom: 32px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
 mat-card-title {
-    color: var(--lime-punch); /* Título en Verde Limón */
-    font-weight: 700;
-    margin-bottom: 8px !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px !important;
 }
 
 mat-card-subtitle {
-    color: var(--text-muted) !important; /* Gris claro */
-    font-size: 0.95rem;
-    margin-bottom: 10px;
+  color: #6c757d !important;
+  font-size: 13px !important;
+  font-weight: 400;
 }
 
-/* --- ESTRUCTURA VERTICAL (ESPACIADO) --- */
+/* --- ADAPTACIÓN DE CAMPOS DE TEXTO --- */
+.full-width {
+  width: 100%;
+}
+
+::v-deep .mat-mdc-text-field-wrapper {
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  transition: border-color 0.2s ease;
+}
+
+/* Iconos de Material discretos */
+mat-icon[matSuffix] {
+  color: #adb5bd;
+}
+
+/* --- ESTRUCTURA VERTICAL LIMPIA --- */
 .opciones-verticales {
-    display: flex;
-    flex-direction: column;
-    gap: 25px; 
-    margin-top: 25px;
-    margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .bloque-opcion {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .label-custom {
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--lime-punch);
-    margin-left: 4px;
+  color: #495057;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding-left: 2px;
 }
 
-/* --- INPUTS Y FORM FIELDS --- */
-.full-width {
-    width: 100%;
-}
-
-/* Iconos del input */
-::ng-deep .mat-mdc-form-field-icon-suffix {
-    color: var(--lime-punch) !important;
-}
-
-/* Texto del input */
-::ng-deep .mdc-text-field__input {
-    color: var(--text-main) !important;
-    caret-color: var(--lime-punch) !important;
-}
-
-/* Labels flotantes */
-::ng-deep .mdc-floating-label {
-    color: var(--text-muted) !important;
-}
-
-::ng-deep .mdc-text-field--focused .mdc-floating-label {
-    color: var(--lime-punch) !important;
-}
-
-/* --- TOGGLE BUTTONS (AUDIO / VIDEO) --- */
+/* --- BUTTON TOGGLE MINIMALISTA --- */
 .toggle-group-full {
-    width: 100%;
-    display: flex;
-    border: 1px solid var(--lime-punch);
-    border-radius: 8px;
-    overflow: hidden;
-    height: 52px;
+  width: 100%;
+  border: 1px solid #dee2e6 !important;
+  border-radius: 8px !important;
+  background-color: #f8f9fa !important;
+  overflow: hidden;
+  display: flex;
+  box-shadow: none !important;
 }
 
 mat-button-toggle {
-    flex: 1; 
-    width: 50%;
-    background-color: transparent;
-    color: var(--text-main);
-    border-left: 1px solid rgba(118, 255, 3, 0.3);
-    transition: all 0.3s ease;
+  flex: 1;
+  color: #495057 !important;
+  border-left: 1px solid #dee2e6 !important;
+  background-color: transparent;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease !important;
 }
 
-mat-button-toggle-checked {
-    background-color: var(--lime-punch) !important;
-    color: #000000 !important; /* Texto negro para contraste */
-    font-weight: 800;
+mat-button-toggle:first-child {
+  border-left: none !important;
+}
+
+/* Estado Activo: Blanco con texto negro puro */
+.mat-button-toggle-checked {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.mat-button-toggle-checked mat-icon {
+  color: #1a1a1a !important;
 }
 
 mat-button-toggle mat-icon {
-    margin-right: 8px;
+  margin-right: 6px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 
-/* --- SELECTOR DE CALIDAD --- */
-::ng-deep .mat-mdc-select-value,
-::ng-deep .mat-mdc-select-value-text {
-    color: var(--text-main) !important; /* Blanco */
-}
-
-::ng-deep .mat-mdc-select-arrow {
-    color: var(--lime-punch) !important;
-}
-
-::ng-deep .mat-mdc-select-panel {
-    background-color: var(--card-bg) !important;
-}
-
-::ng-deep .mat-mdc-option {
-    color: var(--text-main) !important;
-}
-
-::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
-    color: var(--text-main) !important; 
-}
-
-::ng-deep .mat-mdc-option:hover, 
-::ng-deep .mat-mdc-option.mdc-list-item--selected {
-    background-color: rgba(118, 255, 3, 0.15) !important;
-}
-
-::ng-deep .mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text {
-    color: var(--lime-punch) !important;
-    font-weight: bold;
-}
-
-/* --- LOADING SPINNER (FALTABA ESTO) --- */
+/* --- INDICADOR DE CARGA DISCRETO --- */
 .loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    border: 1px dashed var(--text-muted);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 4px 4px 4px;
+  gap: 12px;
+}
+
+::v-deep .mat-mdc-progress-spinner circle {
+  stroke: #1a1a1a !important;
 }
 
 .loading-text {
-    margin-top: 15px;
-    color: var(--lime-punch);
-    font-weight: 500;
+  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0;
+  text-align: left;
 }
 
 .subtext {
-    font-size: 0.85em;
-    color: var(--text-muted);
+  color: #6c757d;
+  font-size: 12px;
 }
 
-::ng-deep .mat-mdc-progress-spinner circle, 
-::ng-deep .mat-spinner circle {
-    stroke: var(--lime-punch) !important;
+/* --- ACCIONES Y BOTÓN PRINCIPAL --- */
+mat-card-actions {
+  padding: 16px 0 0 0 !important;
 }
 
-/* --- BOTÓN DE DESCARGA PRINCIPAL (FALTABA ESTO) --- */
-button[mat-raised-button] {
-    background-color: var(--lime-punch) !important;
-    color: #000000 !important; /* Texto negro */
-    font-weight: bold;
-    padding: 8px 24px;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 15px rgba(118, 255, 3, 0.3); /* Resplandor verde */
+button[mat-raised-button][color='primary'] {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background-color: #1a1a1a !important; /* Negro sobrio */
+  color: #ffffff !important;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease !important;
 }
 
-button[mat-raised-button]:disabled {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.3) !important;
-    box-shadow: none;
+button[mat-raised-button][color='primary']:hover:not([disabled]) {
+  background-color: #333333 !important;
+}
+
+button[mat-raised-button][disabled] {
+  background-color: #e9ecef !important;
+  color: #adb5bd !important;
+  border: none !important;
 }
