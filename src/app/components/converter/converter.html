@@ -66,9 +66,18 @@
 
       @if (isLoading()) {
         <div class="loading-container">
-          <mat-spinner diameter="24"></mat-spinner>
+          <mat-progress-bar
+            [mode]="progressPercent() === 0 ? 'indeterminate' : 'determinate'"
+            [value]="progressPercent()"
+            color="primary"
+          >
+          </mat-progress-bar>
+
           <p class="loading-text">
-            Procesando archivo... <span class="subtext">Espere un momento por favor.</span>
+            {{ statusMessage() }}
+            @if (progressPercent() > 0) {
+              <span class="percent-counter">{{ progressPercent() }}%</span>
+            }
           </p>
         </div>
       }

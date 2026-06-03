@@ -6,10 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar'; // 📦 Nuevo módulo importado
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Downloadservice } from '../../services/downloadservice';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
@@ -21,6 +22,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule, // 📦 Añadido a las importaciones
     MatIconModule,
     MatSnackBarModule,
     MatSelectModule,
@@ -38,6 +40,8 @@ export class Converter {
   formatoSeleccionado = signal<'mp3' | 'mp4'>('mp3');
   calidadSeleccionada = signal('128');
   isLoading = signal(false);
+  progressPercent = signal(0); // 📈 Controla la barra de progreso reactiva
+  statusMessage = signal('Procesando enlace...'); // 💬 Muestra qué está haciendo el backend
 
   // --- VALIDACIÓN DE COBERTURA TOTAL ---
   isUrlValida = computed(() => {
@@ -74,6 +78,8 @@ export class Converter {
   convertir() {
     if (!this.isUrlValida()) return;
     this.isLoading.set(true);
+    this.progressPercent.set(0);
+    this.statusMessage.set('Invocando yt-dlp y multiplexando en el servidor...');
 
     const payload = {
       url: this.urlVideo().trim(),
@@ -86,27 +92,42 @@ export class Converter {
         : this.downloadService.downloadVideo(payload);
 
     request$.subscribe({
-      next: (response: HttpResponse<Blob>) => {
-        const encodedFilename = response.headers.get('X-Filename');
-        let filename = `archivo_${new Date().getTime()}.${this.formatoSeleccionado()}`;
-
-        if (encodedFilename) {
-          try {
-            filename = decodeURIComponent(encodedFilename);
-          } catch (e) {}
+      next: (event: HttpEvent<Blob>) => {
+        // Fase 1: Recibiendo paquetes de bytes (Descarga directa desde tu backend a la PC)
+        if (event.type === HttpEventType.DownloadProgress) {
+          this.statusMessage.set('Transfiriendo archivo binario a tu dispositivo...');
+          if (event.total) {
+            const currentProgress = Math.round((event.loaded / event.total) * 100);
+            this.progressPercent.set(currentProgress);
+          }
         }
 
-        if (response.body) {
-          this.downloadFile(response.body, filename);
-          this.mostrarNotificacion('¡Descarga completada!', 'success');
-          this.urlVideo.set('');
+        // Fase 2: Conclusión y guardado del archivo físico
+        else if (event.type === HttpEventType.Response) {
+          const response = event as HttpResponse<Blob>;
+          const encodedFilename = response.headers.get('X-Filename');
+          let filename = `archivo_${new Date().getTime()}.${this.formatoSeleccionado()}`;
+
+          if (encodedFilename) {
+            try {
+              filename = decodeURIComponent(encodedFilename);
+            } catch (e) {}
+          }
+
+          if (response.body) {
+            this.downloadFile(response.body, filename);
+            this.mostrarNotificacion('¡Descarga completada con éxito!', 'success');
+            this.urlVideo.set('');
+          }
+          this.isLoading.set(false);
+          this.progressPercent.set(0);
         }
-        this.isLoading.set(false);
       },
       error: (err) => {
         console.error(err);
         this.isLoading.set(false);
-        this.mostrarNotificacion('Error al procesar.', 'error');
+        this.progressPercent.set(0);
+        this.mostrarNotificacion('Error al procesar la conversión de YouTube.', 'error');
       },
     });
   }
